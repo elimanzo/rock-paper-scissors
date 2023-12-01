@@ -2,24 +2,39 @@ import { Button, Text, View } from 'react-native';
 
 import { useState } from 'react';
 
-export default function App() {
-  const [data, setData] = useState(null);
+const MOVES = ['Rock', 'Paper', 'Scissors'];
+function getRandomArrayElement(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
 
+export default function App() {
+  const [player, setPlayer] = useState(null);
+  const [bot, setBot] = useState(null);
+  const [winLossDraws, setwinLossDraws] = useState({ wins: 0, losses: 0, draws: 0});
+  const makeMoves = (move) => {
+    setBot(getRandomArrayElement(MOVES));
+    setPlayer(move);
+  };
+
+  const winner = () => {
+    
+  }
   return (
-    <View>
-      {data == null ? (
+    <View style={{padding: 100}}>
+      {player == null ? (
         <View>
           <Text>Rock / Paper / Scissors</Text>
-          <Button title="Rock" onPress={() => setData("Rock")} />
-          <Button title="Paper" onPress={() => setData("Paper")} />
-          <Button title="Scissors" onPress={() => setData("Scissors")} />
+          <Button title="Rock" onPress={() => makeMoves("Rock")} />
+          <Button title="Paper" onPress={() => makeMoves("Paper")} />
+          <Button title="Scissors" onPress={() => makeMoves("Scissors")} />
         </View>
       ) : (
         <View>
-          <Text>You picked {data}.</Text>
-          <Button title="Reset" onPress={() => setData(null)} />
+          <Text>You picked {player}. Bot picked {bot}</Text>
+          <Button title="Reset" onPress={() => setPlayer(null)} />
         </View>
       )}
     </View>
+    
   );
 }
